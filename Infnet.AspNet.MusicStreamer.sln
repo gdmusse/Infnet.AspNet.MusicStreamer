@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStreamer.Application", "MusicStreamer.Application\MusicStreamer.Application.csproj", "{40FB6CD6-98AD-4D7C-9380-1A64BB8C8F06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStreamer.Infrastructure.EntityFrameworkProvider", "MusicStreamer.Infrastructure.EntityFrameworkProvider\MusicStreamer.Infrastructure.EntityFrameworkProvider.csproj", "{65003222-25B2-4281-B613-746F67F2BBC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStreamer.API", "MusicStreamer.API\MusicStreamer.API.csproj", "{C33C15EF-5E5B-417F-AA1B-154DD702303C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStreamer.WebApp", "MusicStreamer.WebApp\MusicStreamer.WebApp.csproj", "{CCBCE265-EC64-4785-8C95-E1429E940CE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Domain", "1.Domain", "{706BD4B1-40B1-4531-8B8E-8DF2102180EA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.ApplicationLayer", "2.ApplicationLayer", "{CF4F9392-D729-43EA-9449-E898E5D48942}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Infrastructure", "3.Infrastructure", "{AD2807E8-AAA7-4B60-8AA4-073815E8A865}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.Api", "4.Api", "{45857310-E01F-422D-8CC7-ACE3AEF07CFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Presentation", "5.Presentation", "{6EA21741-4335-4AE4-A560-95E104030DE8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStreamer.Domain", "MusicStreamer.Domain\MusicStreamer.Domain.csproj", "{85B7299F-58B5-4A46-8BDD-BEE476376BF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40FB6CD6-98AD-4D7C-9380-1A64BB8C8F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40FB6CD6-98AD-4D7C-9380-1A64BB8C8F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40FB6CD6-98AD-4D7C-9380-1A64BB8C8F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40FB6CD6-98AD-4D7C-9380-1A64BB8C8F06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65003222-25B2-4281-B613-746F67F2BBC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65003222-25B2-4281-B613-746F67F2BBC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65003222-25B2-4281-B613-746F67F2BBC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65003222-25B2-4281-B613-746F67F2BBC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C33C15EF-5E5B-417F-AA1B-154DD702303C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C33C15EF-5E5B-417F-AA1B-154DD702303C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C33C15EF-5E5B-417F-AA1B-154DD702303C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C33C15EF-5E5B-417F-AA1B-154DD702303C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCBCE265-EC64-4785-8C95-E1429E940CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCBCE265-EC64-4785-8C95-E1429E940CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCBCE265-EC64-4785-8C95-E1429E940CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCBCE265-EC64-4785-8C95-E1429E940CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85B7299F-58B5-4A46-8BDD-BEE476376BF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85B7299F-58B5-4A46-8BDD-BEE476376BF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85B7299F-58B5-4A46-8BDD-BEE476376BF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85B7299F-58B5-4A46-8BDD-BEE476376BF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40FB6CD6-98AD-4D7C-9380-1A64BB8C8F06} = {CF4F9392-D729-43EA-9449-E898E5D48942}
+		{65003222-25B2-4281-B613-746F67F2BBC0} = {AD2807E8-AAA7-4B60-8AA4-073815E8A865}
+		{C33C15EF-5E5B-417F-AA1B-154DD702303C} = {45857310-E01F-422D-8CC7-ACE3AEF07CFA}
+		{CCBCE265-EC64-4785-8C95-E1429E940CE2} = {6EA21741-4335-4AE4-A560-95E104030DE8}
+		{85B7299F-58B5-4A46-8BDD-BEE476376BF7} = {706BD4B1-40B1-4531-8B8E-8DF2102180EA}
+	EndGlobalSection
+EndGlobal
