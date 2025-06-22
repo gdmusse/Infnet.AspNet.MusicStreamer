@@ -1,16 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MusicStreamer.ApplicationLayer.Dtos;
-using MusicStreamer.ApplicationLayer.Services;
+using System.Net.Http;
+using System.Net.Http.Json;
+using MusicStreamer.Application.Dtos;
+using MusicStreamer.Application.Interfaces;
 
 public class UsuariosController : Controller
 {
-    private readonly UsuarioService _usuarioService;
+    private readonly HttpClient _httpClient;
 
-    public UsuariosController(UsuarioService usuarioService)
+    public UsuariosController(IHttpClientFactory httpClientFactory)
     {
-        _usuarioService = usuarioService;
+        _httpClient = httpClientFactory.CreateClient("ApiClient");
     }
 
+    [HttpGet]
     public IActionResult Cadastro()
     {
         return View();
@@ -22,20 +25,29 @@ public class UsuariosController : Controller
         if (!ModelState.IsValid)
             return View(dto);
 
-        var usuario = await _usuarioService.CadastrarUsuarioAsync(dto);
+        var response = await _httpClient.PostAsJsonAsync("api/usuarios", dto);
 
-        if (usuario == null)
+        if (!response.IsSuccessStatusCode)
         {
             ModelState.AddModelError("", "Email já cadastrado.");
             return View(dto);
         }
 
+        TempData["CadastroSucessoMensagem"] = "Seu cadastro foi realizado com sucesso! Faça login para começar."; 
         return RedirectToAction("Login");
     }
 
+    [HttpGet]
     public IActionResult Login()
     {
-        return View();
+        var model = new UsuarioLoginViewModel();
+
+        if (TempData["CadastroSucessoMensagem"] != null)
+        {
+            model.MensagemConfirmacao = TempData["CadastroSucessoMensagem"].ToString();
+        }
+
+        return View(model);
     }
 
     [HttpPost]
@@ -44,13 +56,15 @@ public class UsuariosController : Controller
         if (!ModelState.IsValid)
             return View(dto);
 
-        var usuario = await _usuarioService.LoginAsync(dto);
+        var response = await _httpClient.PostAsJsonAsync("api/usuarios/login", dto);
 
-        if (usuario == null)
+        if (!response.IsSuccessStatusCode)
         {
             ModelState.AddModelError("", "Credenciais inválidas.");
             return View(dto);
         }
+
+        var usuario = await response.Content.ReadFromJsonAsync<UsuarioDto>();
 
         HttpContext.Session.SetString("UsuarioId", usuario.Id.ToString());
         HttpContext.Session.SetString("UsuarioNome", usuario.Nome);

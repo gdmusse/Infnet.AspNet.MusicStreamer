@@ -1,17 +1,34 @@
-﻿@model MusicStreamer.ApplicationLayer.Dtos.UsuarioLoginDto
+﻿@model MusicStreamer.Application.Dtos.UsuarioLoginViewModel
 
 <h2>Login</h2>
 
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(Model.MensagemConfirmacao))
+{
+    <div class="alert @(Model.MensagemConfirmacao.Contains("sucesso") ? "alert-success" : "alert-danger")" role="alert">
+        @Model.MensagemConfirmacao
+    </div>
+}
+
 <form asp-action="Login" method="post">
     <div>
-        <label>Email</label>
+        <label asp-for="Email"></label>
         <input asp-for="Email" />
         <span asp-validation-for="Email"></span>
     </div>
     <div>
-        <label>Senha</label>
+        <label asp-for="Senha"></label>
         <input asp-for="Senha" type="password" />
         <span asp-validation-for="Senha"></span>
     </div>
-    <button type="submit">Login</button>
+    <button type="submit">Entrar</button>
 </form>

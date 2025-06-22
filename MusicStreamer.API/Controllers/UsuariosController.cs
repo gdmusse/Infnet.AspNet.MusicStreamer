@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using MusicStreamer.ApplicationLayer.Dtos;
-using MusicStreamer.ApplicationLayer.Services;
+using MusicStreamer.Application.Interfaces;
+using MusicStreamer.Application.Dtos;
 
 namespace MusicStreamer.API.Controllers;
 
@@ -8,9 +8,9 @@ namespace MusicStreamer.API.Controllers;
 [Route("api/usuarios")]
 public class UsuariosController : ControllerBase
 {
-    private readonly UsuarioService _usuarioService;
+    private readonly IUsuarioService _usuarioService;
 
-    public UsuariosController(UsuarioService usuarioService)
+    public UsuariosController(IUsuarioService usuarioService)
     {
         _usuarioService = usuarioService;
     }

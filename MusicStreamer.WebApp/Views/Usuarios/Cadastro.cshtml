@@ -1,7 +1,16 @@
-﻿@model MusicStreamer.ApplicationLayer.Dtos.UsuarioCadastroDto
+﻿@model MusicStreamer.Application.Dtos.UsuarioCadastroDto
 
 <h2>Cadastro</h2>
 
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
 <form asp-action="Cadastro" method="post">
     <div>
         <label>Nome</label>

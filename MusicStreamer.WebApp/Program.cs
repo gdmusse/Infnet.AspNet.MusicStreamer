@@ -1,10 +1,8 @@
-using MusicStreamer.ApplicationLayer.Services;
 using MusicStreamer.Domain.Interfaces;
 using MusicStreamer.Infrastructure.EntityFrameworkProvider.Repositories;
 using Microsoft.EntityFrameworkCore;
 using MusicStreamer.Infrastructure.EntityFrameworkProvider.Context;
-
-
+using MusicStreamer.Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,19 +14,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddHttpClient("ApiClient", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7048/"); 
+});
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

@@ -1,4 +1,4 @@
-﻿namespace MusicStreamer.ApplicationLayer.Dtos;
+﻿namespace MusicStreamer.Application.Dtos;
 
 public class UsuarioCadastroDto
 {

@@ -1,10 +1,10 @@
-﻿using MusicStreamer.Application.DTOs;
+﻿using MusicStreamer.Application.Dtos;
 using MusicStreamer.Domain.Entities;
 
 namespace MusicStreamer.Application.Interfaces;
 
 public interface IUsuarioService
 {
-    Task<Usuario?> LoginAsync(string email, string senha);
-    Task<Usuario> RegistrarAsync(UsuarioDto dto);
+    Task<Usuario?> CadastrarUsuarioAsync(UsuarioCadastroDto dto);
+    Task<Usuario?> LoginAsync(UsuarioLoginDto dto);
 }

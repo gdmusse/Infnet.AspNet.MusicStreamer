@@ -1,8 +1,9 @@
 ﻿using MusicStreamer.Infrastructure.EntityFrameworkProvider.Context;
 using MusicStreamer.Infrastructure.EntityFrameworkProvider.Repositories;
 using MusicStreamer.Domain.Interfaces;
-using MusicStreamer.ApplicationLayer.Services;
 using Microsoft.EntityFrameworkCore;
+using MusicStreamer.Application.Interfaces;
+using MusicStreamer.Application.Dtos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Services & Repositories
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IAssinaturaRepository, AssinaturaRepository>();
+builder.Services.AddScoped<IAssinaturaService, AssinaturaService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

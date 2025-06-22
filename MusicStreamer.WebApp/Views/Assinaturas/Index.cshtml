@@ -1,0 +1,66 @@
+﻿@model MusicStreamer.Application.Dtos.AssinaturaViewModel
+
+@{
+    ViewData["Title"] = "Gerenciar Assinatura";
+}
+
+<h1>Gerenciar Sua Assinatura</h1>
+
+<hr />
+
+@if (!string.IsNullOrEmpty(Model.MensagemConfirmacao))
+{
+    <div class="alert @(Model.MensagemConfirmacao.Contains("sucesso") ? "alert-success" : "alert-danger")" role="alert">
+        @Model.MensagemConfirmacao
+    </div>
+}
+
+<h2>Seu Plano Atual</h2>
+
+@if (Model.PlanoAtual == null)
+{
+    <p>Você ainda não possui uma assinatura ativa.</p>
+    <p>Escolha um plano abaixo para começar!</p>
+}
+else
+{
+    <p><strong>Plano:</strong> @Model.PlanoAtual.Plano</p>
+    <p>Data Assinatura: @Model.PlanoAtual.DataAssinatura</p>
+    <p>Você pode alterar seu plano a qualquer momento.</p>
+}
+
+---
+
+<h2>Escolha ou Altere seu Plano</h2>
+
+<form asp-action="Escolher" method="post">
+    <div class="form-group">
+        <label for="planoSelecionado">Plano:</label>
+        <select id="planoSelecionado" name="planoSelecionado" class="form-control">
+            @foreach (var plano in Model.PlanosDisponiveis)
+            {
+                <!option value="@plano" @(Model.PlanoAtual != null && Model.PlanoAtual.Plano == plano ? "selected" : "")>@plano</!option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">
+            @(Model.PlanoAtual == null ? "Assinar Agora" : "Alterar Plano")
+        </button>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="text-danger mt-3">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+</form>
+
+<div class="mt-4">
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Voltar para o Início</a>
+</div>

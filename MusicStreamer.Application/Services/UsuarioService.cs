@@ -1,10 +1,9 @@
 ﻿using MusicStreamer.Domain.Entities;
 using MusicStreamer.Domain.Interfaces;
-using MusicStreamer.ApplicationLayer.Dtos;
+using MusicStreamer.Application.Dtos;
+using MusicStreamer.Application.Interfaces;
 
-namespace MusicStreamer.ApplicationLayer.Services;
-
-public class UsuarioService
+public class UsuarioService : IUsuarioService
 {
     private readonly IUsuarioRepository _usuarioRepository;
 
