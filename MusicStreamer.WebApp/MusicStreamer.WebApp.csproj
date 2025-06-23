@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -10,5 +10,5 @@
     <ProjectReference Include="..\MusicStreamer.Application\MusicStreamer.Application.csproj" />
     <ProjectReference Include="..\MusicStreamer.Infrastructure.EntityFrameworkProvider\MusicStreamer.Infrastructure.EntityFrameworkProvider.csproj" />
   </ItemGroup>
-
+	
 </Project>

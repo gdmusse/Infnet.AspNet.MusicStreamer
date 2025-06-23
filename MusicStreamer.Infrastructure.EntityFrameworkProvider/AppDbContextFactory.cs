@@ -10,7 +10,6 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        // Caminho para o appsettings.json da API
         var basePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "MusicStreamer.API");
 
         var config = new ConfigurationBuilder()

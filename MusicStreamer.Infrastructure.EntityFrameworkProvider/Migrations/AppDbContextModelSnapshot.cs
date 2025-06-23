@@ -27,34 +27,14 @@ namespace MusicStreamer.Infrastructure.EntityFrameworkProvider.Migrations
                     b.Property<Guid>("BandasFavoritasId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsuarioId")
+                    b.Property<Guid>("FavoritadaPorUsuariosId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("BandasFavoritasId", "UsuarioId");
+                    b.HasKey("BandasFavoritasId", "FavoritadaPorUsuariosId");
 
-                    b.HasIndex("UsuarioId");
+                    b.HasIndex("FavoritadaPorUsuariosId");
 
-                    b.ToTable("BandasFavoritas", (string)null);
-                });
-
-            modelBuilder.Entity("MusicStreamer.Domain.Entities.Album", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BandaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Titulo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BandaId");
-
-                    b.ToTable("Albuns", (string)null);
+                    b.ToTable("UsuariosBandasFavoritas", (string)null);
                 });
 
             modelBuilder.Entity("MusicStreamer.Domain.Entities.Assinatura", b =>
@@ -96,47 +76,36 @@ namespace MusicStreamer.Infrastructure.EntityFrameworkProvider.Migrations
                     b.ToTable("Bandas", (string)null);
                 });
 
-            modelBuilder.Entity("MusicStreamer.Domain.Entities.Musica", b =>
+            modelBuilder.Entity("MusicStreamer.Domain.Entities.Transacao", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AlbumId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<bool>("Autorizada")
+                        .HasColumnType("bit");
 
-                    b.Property<TimeSpan>("Duracao")
-                        .HasColumnType("time");
-
-                    b.Property<string>("Titulo")
+                    b.Property<string>("Comerciante")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<DateTime>("DataHora")
+                        .HasColumnType("datetime2");
 
-                    b.HasIndex("AlbumId");
-
-                    b.ToTable("Musicas", (string)null);
-                });
-
-            modelBuilder.Entity("MusicStreamer.Domain.Entities.Playlist", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
+                    b.Property<string>("MotivoNegacao")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(10,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Playlists", (string)null);
+                    b.ToTable("Transacoes", (string)null);
                 });
 
             modelBuilder.Entity("MusicStreamer.Domain.Entities.Usuario", b =>
@@ -162,34 +131,39 @@ namespace MusicStreamer.Infrastructure.EntityFrameworkProvider.Migrations
                     b.ToTable("Usuarios", (string)null);
                 });
 
-            modelBuilder.Entity("MusicaPlaylist", b =>
+            modelBuilder.Entity("Musica", b =>
                 {
-                    b.Property<Guid>("MusicasId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PlaylistId")
+                    b.Property<Guid>("BandaId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("MusicasId", "PlaylistId");
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("PlaylistId");
+                    b.HasKey("Id");
 
-                    b.ToTable("MusicasPlaylist", (string)null);
+                    b.HasIndex("BandaId");
+
+                    b.ToTable("Musicas", (string)null);
                 });
 
             modelBuilder.Entity("MusicaUsuario", b =>
                 {
+                    b.Property<Guid>("FavoritadaPorUsuariosId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("MusicasFavoritasId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("FavoritadaPorUsuariosId", "MusicasFavoritasId");
 
-                    b.HasKey("MusicasFavoritasId", "UsuarioId");
+                    b.HasIndex("MusicasFavoritasId");
 
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("MusicasFavoritas", (string)null);
+                    b.ToTable("UsuariosMusicasFavoritas", (string)null);
                 });
 
             modelBuilder.Entity("BandaUsuario", b =>
@@ -202,20 +176,9 @@ namespace MusicStreamer.Infrastructure.EntityFrameworkProvider.Migrations
 
                     b.HasOne("MusicStreamer.Domain.Entities.Usuario", null)
                         .WithMany()
-                        .HasForeignKey("UsuarioId")
+                        .HasForeignKey("FavoritadaPorUsuariosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MusicStreamer.Domain.Entities.Album", b =>
-                {
-                    b.HasOne("MusicStreamer.Domain.Entities.Banda", "Banda")
-                        .WithMany("Albuns")
-                        .HasForeignKey("BandaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Banda");
                 });
 
             modelBuilder.Entity("MusicStreamer.Domain.Entities.Assinatura", b =>
@@ -229,21 +192,10 @@ namespace MusicStreamer.Infrastructure.EntityFrameworkProvider.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("MusicStreamer.Domain.Entities.Musica", b =>
-                {
-                    b.HasOne("MusicStreamer.Domain.Entities.Album", "Album")
-                        .WithMany("Musicas")
-                        .HasForeignKey("AlbumId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Album");
-                });
-
-            modelBuilder.Entity("MusicStreamer.Domain.Entities.Playlist", b =>
+            modelBuilder.Entity("MusicStreamer.Domain.Entities.Transacao", b =>
                 {
                     b.HasOne("MusicStreamer.Domain.Entities.Usuario", "Usuario")
-                        .WithMany("Playlists")
+                        .WithMany("Transacoes")
                         .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -251,51 +203,42 @@ namespace MusicStreamer.Infrastructure.EntityFrameworkProvider.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("MusicaPlaylist", b =>
+            modelBuilder.Entity("Musica", b =>
                 {
-                    b.HasOne("MusicStreamer.Domain.Entities.Musica", null)
-                        .WithMany()
-                        .HasForeignKey("MusicasId")
+                    b.HasOne("MusicStreamer.Domain.Entities.Banda", "Banda")
+                        .WithMany("Musicas")
+                        .HasForeignKey("BandaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MusicStreamer.Domain.Entities.Playlist", null)
-                        .WithMany()
-                        .HasForeignKey("PlaylistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Banda");
                 });
 
             modelBuilder.Entity("MusicaUsuario", b =>
                 {
-                    b.HasOne("MusicStreamer.Domain.Entities.Musica", null)
+                    b.HasOne("MusicStreamer.Domain.Entities.Usuario", null)
+                        .WithMany()
+                        .HasForeignKey("FavoritadaPorUsuariosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Musica", null)
                         .WithMany()
                         .HasForeignKey("MusicasFavoritasId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("MusicStreamer.Domain.Entities.Usuario", null)
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MusicStreamer.Domain.Entities.Album", b =>
-                {
-                    b.Navigation("Musicas");
                 });
 
             modelBuilder.Entity("MusicStreamer.Domain.Entities.Banda", b =>
                 {
-                    b.Navigation("Albuns");
+                    b.Navigation("Musicas");
                 });
 
             modelBuilder.Entity("MusicStreamer.Domain.Entities.Usuario", b =>
                 {
                     b.Navigation("Assinatura");
 
-                    b.Navigation("Playlists");
+                    b.Navigation("Transacoes");
                 });
 #pragma warning restore 612, 618
         }

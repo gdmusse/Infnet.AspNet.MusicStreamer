@@ -16,6 +16,12 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IAssinaturaRepository, AssinaturaRepository>();
 builder.Services.AddScoped<IAssinaturaService, AssinaturaService>();
+builder.Services.AddScoped<ITransacaoRepository, TransacaoRepository>();
+builder.Services.AddScoped<ITransacaoService, TransacaoService>();
+builder.Services.AddScoped<IMusicaRepository, MusicaRepository>();
+builder.Services.AddScoped<IMusicaService, MusicaService>();
+builder.Services.AddScoped<IBandaRepository, BandaRepository>();
+builder.Services.AddScoped<IBandaService, BandaService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

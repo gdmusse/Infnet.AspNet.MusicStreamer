@@ -2,6 +2,8 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 using MusicStreamer.Application.Dtos;
+using MusicStreamer.WebApp.Models;
+using System.Numerics;
 
 public class AssinaturasController : Controller
 {
@@ -66,7 +68,28 @@ public class AssinaturasController : Controller
             return RedirectToAction("Index"); 
         }
 
-        TempData["MensagemAssinatura"] = "Plano escolhido com sucesso!";
-        return RedirectToAction("Index");
+        TempData["MensagemAssinatura"] = "Plano escolhido com sucesso! Favor realizar a transação";
+
+        decimal valor = planoSelecionado switch
+        {
+            "Família" => 29.90m,
+            "Premium" => 19.90m,
+            "Free" => 0m,
+            _ => 0m
+        };
+
+        if (valor == 0 && !planoSelecionado.Equals("free", StringComparison.OrdinalIgnoreCase))
+        {
+            ModelState.AddModelError("", "Erro ao atualizar plano. Por favor, tente novamente.");
+            TempData["Mensagem"] = "Erro ao atualizar plano. Por favor, tente novamente.";
+
+            return RedirectToAction("Index");
+        }
+
+        return RedirectToAction("Index", "Transacoes", new
+        {
+            comerciante = planoSelecionado,
+            valor = valor
+        });
     }
 }

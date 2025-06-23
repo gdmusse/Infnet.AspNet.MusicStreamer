@@ -1,4 +1,7 @@
-﻿namespace MusicStreamer.Application.Dtos
+﻿using MusicStreamer.Application.Dtos;
+
+namespace MusicStreamer.WebApp.Models
+
 {
     public class AssinaturaViewModel
     {

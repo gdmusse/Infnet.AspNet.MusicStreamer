@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using MusicStreamer.Application.Dtos;
 using MusicStreamer.Application.Interfaces;
+using MusicStreamer.WebApp.Models;
 
 public class UsuariosController : Controller
 {
@@ -54,14 +55,18 @@ public class UsuariosController : Controller
     public async Task<IActionResult> Login(UsuarioLoginDto dto)
     {
         if (!ModelState.IsValid)
-            return View(dto);
+        {
+            var model = new UsuarioLoginViewModel {Email = dto.Email, Senha = dto.Senha };
+            return View(model);
+        }
 
         var response = await _httpClient.PostAsJsonAsync("api/usuarios/login", dto);
 
         if (!response.IsSuccessStatusCode)
         {
             ModelState.AddModelError("", "Credenciais inválidas.");
-            return View(dto);
+            var model = new UsuarioLoginViewModel { Email = dto.Email, Senha = dto.Senha };
+            return View(model);
         }
 
         var usuario = await response.Content.ReadFromJsonAsync<UsuarioDto>();
@@ -69,6 +74,6 @@ public class UsuariosController : Controller
         HttpContext.Session.SetString("UsuarioId", usuario.Id.ToString());
         HttpContext.Session.SetString("UsuarioNome", usuario.Nome);
 
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "Musicas");
     }
 }

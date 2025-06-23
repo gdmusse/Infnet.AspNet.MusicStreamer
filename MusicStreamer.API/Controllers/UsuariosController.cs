@@ -5,7 +5,7 @@ using MusicStreamer.Application.Dtos;
 namespace MusicStreamer.API.Controllers;
 
 [ApiController]
-[Route("api/usuarios")]
+[Route("api/[controller]")]
 public class UsuariosController : ControllerBase
 {
     private readonly IUsuarioService _usuarioService;
@@ -20,7 +20,7 @@ public class UsuariosController : ControllerBase
     {
         var usuario = await _usuarioService.CadastrarUsuarioAsync(dto);
         if (usuario == null)
-            return BadRequest("Email já cadastrado.");
+            return BadRequest(new { mensagem =  "Email já cadastrado." });
 
         return Ok(new { usuario.Id, usuario.Nome, usuario.Email });
     }
@@ -30,7 +30,7 @@ public class UsuariosController : ControllerBase
     {
         var usuario = await _usuarioService.LoginAsync(dto);
         if (usuario == null)
-            return Unauthorized("Credenciais inválidas.");
+            return Unauthorized(new { mensagem = "Credenciais inválidas." });
 
         return Ok(new { usuario.Id, usuario.Nome, usuario.Email });
     }

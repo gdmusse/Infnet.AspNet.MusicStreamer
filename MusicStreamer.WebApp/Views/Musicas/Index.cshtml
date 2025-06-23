@@ -1,0 +1,82 @@
+﻿@model MusicStreamer.WebApp.Models.MusicaBandaViewModel
+
+@{
+    ViewData["Title"] = "Músicas e Bandas";
+}
+
+<h2>Músicas e Bandas</h2>
+
+<form method="get" asp-controller="Musicas" asp-action="Index" class="mb-4">
+    <div class="form-group">
+        <input type="text" name="nome" value="@Model.NomeBusca" placeholder="Buscar por nome de música ou banda" class="form-control" />
+    </div>
+    <div class="form-check mt-2">
+        <input type="checkbox" class="form-check-input" name="apenasFavoritas" value="true" @(Model.ApenasFavoritas ? "checked" : "") />
+        <label class="form-check-label">Apenas favoritos</label>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Buscar</button>
+</form>
+
+<hr />
+
+<h4>Músicas</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Banda</th>
+            <th>Favorita</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var musica in Model.Musicas)
+        {
+            <tr>
+                <td>@musica.Titulo</td>
+                <td>@musica.BandaNome</td>
+                <td>
+                    @(musica.Favorita ? "⭐" : "")
+                </td>
+                <td>
+                    <form method="post" asp-action="FavoritarMusica" asp-controller="Musicas">
+                        <input type="hidden" name="musicaId" value="@musica.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            @(musica.Favorita ? "Remover Favorito" : "Favoritar")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h4>Bandas</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Favorita</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var banda in Model.Bandas)
+        {
+            <tr>
+                <td>@banda.Nome</td>
+                <td>
+                    @(banda.Favorita ? "⭐" : "")
+                </td>
+                <td>
+                    <form method="post" asp-action="FavoritarBanda" asp-controller="Musicas">
+                        <input type="hidden" name="bandaId" value="@banda.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-secondary">
+                            @(banda.Favorita ? "Remover Favorito" : "Favoritar")
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

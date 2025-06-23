@@ -35,7 +35,7 @@ public class AssinaturasController : ControllerBase
     public async Task<IActionResult> EscolherPlano([FromBody] AssinaturaCadastroDto dto)
     {
         if (dto == null || string.IsNullOrWhiteSpace(dto.Plano) || dto.UsuarioId == Guid.Empty)
-            return BadRequest("Dados inválidos.");
+            return BadRequest(new { mensagem = "Dados inválidos." });
 
         var sucesso = await _assinaturaService.EscolherPlanoAsync(dto);
 

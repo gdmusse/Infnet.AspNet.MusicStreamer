@@ -14,6 +14,11 @@ public class UsuarioRepository : IUsuarioRepository
         _context = context;
     }
 
+    public async Task<Usuario?> ObterPorIdAsync(Guid id)
+    {
+        return await _context.Usuarios.FirstOrDefaultAsync(u => u.Id == id);
+    }
+
     public async Task<Usuario?> ObterPorEmailAsync(string email)
     {
         return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
@@ -32,6 +37,20 @@ public class UsuarioRepository : IUsuarioRepository
     public async Task AdicionarAsync(Usuario usuario)
     {
         _context.Usuarios.Add(usuario);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<Usuario?> ObterPorIdComFavoritosAsync(Guid id)
+    {
+        return await _context.Usuarios
+            .Include(u => u.MusicasFavoritas)
+                .ThenInclude(m => m.Banda)
+            .Include(u => u.BandasFavoritas)
+            .FirstOrDefaultAsync(u => u.Id == id);
+    }
+
+    public async Task SaveChangesAsync()
+    {
         await _context.SaveChangesAsync();
     }
 }

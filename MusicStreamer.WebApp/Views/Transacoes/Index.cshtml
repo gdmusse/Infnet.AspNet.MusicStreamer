@@ -1,0 +1,39 @@
+﻿@model MusicStreamer.WebApp.Models.TransacaoViewModel
+
+<h2>Nova Transação</h2>
+
+@if (!string.IsNullOrEmpty(Model.MensagemAssinatura))
+{
+    <div class="alert @(Model.MensagemAssinatura.Contains("sucesso") ? "alert-success" : "alert-danger")" role="alert">
+        @Model.MensagemAssinatura
+    </div>
+}
+
+<form asp-action="Nova" method="post">
+    <div class="form-group">
+        <label for="Comerciante">Plano:</label>
+        <select id="Comerciante" name="Comerciante" class="form-control">
+            @foreach (var comerciante in Model.ComerciantesDisponiveis)
+            {
+                <!option value="@comerciante")>@comerciante</!option>
+            }
+        </select>
+    </div>
+
+    <div>
+        <label asp-for="Valor">Valor</label>
+        <input asp-for="Valor" type="number" step="0.01" readonly />
+    </div>
+
+    <button type="submit">Confirmar Pagamento</button>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="text-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
