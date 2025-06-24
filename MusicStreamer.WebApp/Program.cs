@@ -14,9 +14,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
 
+var urlApi = builder.Configuration["UriApi"];
+
 builder.Services.AddHttpClient("ApiClient", client =>
 {
-    client.BaseAddress = new Uri("https://localhost:7048/"); 
+    client.BaseAddress = new Uri(urlApi); 
 });
 
 builder.Services.AddControllersWithViews();
